@@ -1,3 +1,8 @@
+/*
+    author : Silvan Sholla
+    date : 25/6/22
+*/
+
 const fs = require('fs');
 
 let rawData = fs.readFileSync('delta_deploy/util/metadata.json');

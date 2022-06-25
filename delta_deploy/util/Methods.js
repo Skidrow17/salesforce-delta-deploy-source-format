@@ -1,4 +1,7 @@
-
+/*
+    author : Silvan Sholla
+    date : 25/6/22
+*/
 
 const addValueToKey = (key, value, folderFileName) => {
     folderFileName[key] ??= [];
