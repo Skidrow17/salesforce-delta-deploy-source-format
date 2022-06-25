@@ -1,28 +1,27 @@
-/*
+/****************************************************************************************************
     author : Silvan Sholla
-    date : 25/6/22
-*/
+    date : 25/06/22
+    description : excecutable 
+    example : node delta_deploy.js origin/master
+****************************************************************************************************/ 
+
+const fs = require('fs');
 
 const { execSync } = require('child_process');
-const fs = require('fs');
-const PackageXMLGenerator = require('./delta_deploy/services/PackageXMLGenerator')
-const SourceFilePackageGenerator = require('./delta_deploy/services/SourceFilePackageGenerator')
-const {SOURCE_FOLDER, DESTINATION_FOLDER} = require('./delta_deploy/util/Constants');
+const {SOURCE_FOLDER, DESTINATION_FOLDER, STANDARD_PACKAGE_VERSION} = require('./delta_deploy/util/Constants');
+const methods = require('./delta_deploy/util/Methods');
 
-let branch = process.argv[2];
+let targetBranch = process.argv[2];
 
-const sourceDestinationBranchesFilesDiff = execSync('git diff --name-only '+branch, { encoding: 'utf-8' }).split('\n');
+//run git command to find the differences between current and target branch
+const sourceDestinationBranchesFilesDiff = execSync('git diff --name-only '.concat(targetBranch), { encoding: 'utf-8' }).split('\n');
 
 //delete folder
 fs.rmSync(DESTINATION_FOLDER, { recursive: true, force: true });
 fs.mkdirSync(DESTINATION_FOLDER, {recursive: true});
 
-//generate new package
-const sfpg = new SourceFilePackageGenerator();
-const pxmlg = new PackageXMLGenerator();
-
 //copy files FromSource to Destinatior
-let filesCoppied = sfpg.packageGenerator(sourceDestinationBranchesFilesDiff,SOURCE_FOLDER,DESTINATION_FOLDER);
+let filesCoppied = methods.filesCopyFromSourceToDestinationFolder(sourceDestinationBranchesFilesDiff,SOURCE_FOLDER,DESTINATION_FOLDER);
 
 //package xml generator
-pxmlg.packageXMLGenerator(filesCoppied,DESTINATION_FOLDER);
+methods.packageXMLGenerator(filesCoppied,DESTINATION_FOLDER,STANDARD_PACKAGE_VERSION);
