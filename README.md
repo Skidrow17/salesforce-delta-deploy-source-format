@@ -106,13 +106,13 @@ _Below is an example of how you can instruct your audience on installing and set
     </target>
     ```
 
-5. Install NPM packages
+5. Install fs-extra library
    ```sh
-   npm install
+   npm install fs-extra
    ```
 6. Run the command (generates package.xml + copies the files inside the deployable folder)
    ```sh 
-    node deltaAntDeploy.js targetBranchNameYouWantToDeploy
+    node delta_deploy.js targetBranchNameYouWantToDeploy
    ```
 7. excecute ant migration tool 
    
