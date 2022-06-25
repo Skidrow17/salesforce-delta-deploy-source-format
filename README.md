@@ -11,11 +11,11 @@
     <br />
     <br />
     <br />
-    <a href="https://github.com/Skidrow17/salesforce-source-package-delta-deploy/issues">View Demo</a>
+    <a href="https://github.com/Skidrow17/salesforce-delta-deploy-source-format/issues">View Demo</a>
     ·
-    <a href="https://github.com/Skidrow17/salesforce-source-package-delta-deploy/issues">Report Bug</a>
+    <a href="https://github.com/Skidrow17/salesforce-delta-deploy-source-format/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Skidrow17/salesforce-source-package-delta-deploy/issues">Request Feature</a>
+    <a href="https://github.com/Skidrow17/salesforce-delta-deploy-source-format/issues">Request Feature</a>
   </p>
 </div>
 
@@ -94,7 +94,7 @@ _Below is an example of how you can instruct your audience on installing and set
 
 1. Clone the repo
    ```sh
-   https://github.com/Skidrow17/salesforce-source-package-delta-deploy.git
+   https://github.com/Skidrow17/salesforce-delta-deploy-source-format.git
    ```
 2. Copy the files inside your salesforce project folder
 3. Add on .gitignore file the DeltaDeploy folder
@@ -147,6 +147,6 @@ In case you want to contribute to the project and extend its funcationality plea
 
 Silvan Sholla - (https://www.linkedin.com/in/silvan-sholla-1155bb162/)
 
-Project Link: (https://github.com/Skidrow17/salesforce-source-package-delta-deploy)
+Project Link: (https://github.com/Skidrow17/salesforce-delta-deploy-source-format)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
