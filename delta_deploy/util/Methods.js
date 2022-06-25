@@ -69,7 +69,7 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
 
             /*
               in case the metadata file contains extra .meta.xml file copy that also
-              its required for a successfull deploy 
+              its required for a successfull deploy
             */
 
             if(fse.existsSync(file.concat(META_XML))){
@@ -107,7 +107,9 @@ const packageXMLGenerator = (filesCoppied, destinationDirectory, packageVersion)
         packageXML = packageXML + '    <types>'+'\n';
         filesCoppied[folderName].forEach(function (metadataName) {
             if(folderName !== 'labels') {
-                packageXML = packageXML + '        <members>' + metadataName.replace('-meta.xml', '').replace(folderObjectMap.get(folderName).suffix,'').replace('.','') + '</members>' + '\n';
+                let metadataSuffix = '.'+folderObjectMap.get(folderName).suffix;
+                let metaDataFiltered = metadataName.replace('-meta.xml', '').replace(metadataSuffix,'');
+                packageXML = packageXML + '        <members>' + metaDataFiltered + '</members>' + '\n';
             }else{
                 packageXML = packageXML + '        <members>*</members>' + '\n';
             }
