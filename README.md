@@ -11,7 +11,7 @@
     <br />
     <br />
     <br />
-    <a href="https://github.com/Skidrow17/salesforce-delta-deploy-source-format/issues">View Demo</a>
+    <a href="https://www.youtube.com/watch?v=n0wU1zf0HIM">View Demo</a>
     ·
     <a href="https://github.com/Skidrow17/salesforce-delta-deploy-source-format/issues">Report Bug</a>
     ·
