@@ -3,13 +3,12 @@ const {EXCLUDED_FILES, META_XML, FOLDER_SEPARATOR, NOT_REMOTE_BRANCH_SPECIFIED, 
 const fse = require('fs-extra');
 
 
-
 /****************************************************************************************************
  author : Silvan Sholla
  date : 25/06/22
- @param key : contains the key of the map
- @param value : contains the value of the map
- @param folderFileName : map that the values are added
+ @param {String} key - contains the key of the map
+ @param {List<String>} value - contains the value of the map
+ @param {Map<String, List<String>>} folderFileName - contains the map values
  description : method used to create a map with key as folder name
  and value a list of metadata files of that folder
  ****************************************************************************************************/
@@ -22,22 +21,22 @@ const addValueToKey = (key, value, folderFileName) => {
 /****************************************************************************************************
  author : Silvan Sholla
  date : 25/06/22
- @param s : contains the string that we want to split
- @param on : contains the separator we want to use
+ @param {String} stringToSplit - contains the string that we want to split
+ @param {String} separator - contains the separator we want to use
  description : splits the string just on the first reference
  of the separator
  ****************************************************************************************************/
 
-const splitOnce = (s, on) => {
-    [first, ...rest] = s.split(on);
-    return [first, rest.length > 0? rest.join(on) : null];
+const splitOnce = (stringToSplit, separator) => {
+    [first, ...rest] = stringToSplit.split(separator);
+    return [first, rest.length > 0? rest.join(separator) : null];
 };
 
 
 /****************************************************************************************************
  author : Silvan Sholla
  date : 25/06/22
- @param jsonObject : contains a json object
+ @param {Object[]} jsonObject - contains a json object
  description : converts jsonobject to a map
  ****************************************************************************************************/
 
@@ -52,7 +51,7 @@ const jsonToMap = (jsonObject) => {
 /****************************************************************************************************
  author : Silvan Sholla
  date : 26/06/22
- @param commandParam : checks the param validity
+ @param {String} commandParam - checks the param validity
  description : return true in case there was an error and the program stops
  ****************************************************************************************************/
 
@@ -72,9 +71,9 @@ const isArgumentValid = (commandParam) => {
 /****************************************************************************************************
  author : Silvan Sholla
  date : 25/06/22
- @param files : contains list of the paths of the files that got modified
- @param sourceDirectory : contains the source folder path
- @param destinationDirectory : contains the destination folder path
+ @param {List<String>} files - contains list of the paths of the files that got modified
+ @param {String} sourceDirectory - contains the source folder path
+ @param {String} destinationDirectory - contains the destination folder path
  description : coppies the modified/created files from the source folder
  to the destination folder
  ****************************************************************************************************/
@@ -107,8 +106,9 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
 /****************************************************************************************************
  author : Silvan Sholla
  date : 25/06/22
- @param filesCoppied : contains a map with folder name as key and list of metadata as value
- @param destinationDirectory : contains the directory which i want to create the package.xml file
+ @param {String} filesCoppied - contains a map with folder name as key and list of metadata as value
+ @param {String} destinationDirectory - contains the directory where the package.xml file will be saved
+ @param {String} packageVersion - contains the version of the generated xml
  description : method used to generate package xml whith the differences between two branches
  the current one with the one you specify when you run the command
  ****************************************************************************************************/
