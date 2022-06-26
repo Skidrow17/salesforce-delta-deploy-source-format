@@ -1,5 +1,5 @@
 
-const {EXCLUDED_FILES, META_XML, FOLDER_SEPARATOR} = require('../util/Constants');
+const {EXCLUDED_FILES, META_XML, FOLDER_SEPARATOR, NOT_REMOTE_BRANCH_SPECIFIED, REMOTE_BRANCH_NOT_CORRECT_FORMAT} = require('../util/Constants');
 const fse = require('fs-extra');
 
 
@@ -47,6 +47,26 @@ const jsonToMap = (jsonObject) => {
         folderObjectMap.set(jsonObject[attributename].directoryName,jsonObject[attributename]);
     }
     return folderObjectMap;
+};
+
+/****************************************************************************************************
+ author : Silvan Sholla
+ date : 26/06/22
+ @param commandParam : checks the param validity
+ description : return true in case there was an error and the program stops
+ ****************************************************************************************************/
+
+const isArgumentValid = (commandParam) => {
+    if(commandParam == null){
+        console.log(NOT_REMOTE_BRANCH_SPECIFIED);
+        return true;
+    }
+    else if(commandParam.split('/').length != 2) {
+        console.log(REMOTE_BRANCH_NOT_CORRECT_FORMAT);
+        return true;
+    }else{
+        return false;
+    }
 };
 
 /****************************************************************************************************
@@ -133,3 +153,4 @@ exports.splitOnce = splitOnce;
 exports.jsonToMap = jsonToMap;
 exports.filesCopyFromSourceToDestinationFolder = filesCopyFromSourceToDestinationFolder;
 exports.packageXMLGenerator = packageXMLGenerator;
+exports.isArgumentValid = isArgumentValid;
