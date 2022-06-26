@@ -11,11 +11,11 @@
     <br />
     <br />
     <br />
-    <a href="https://github.com/Skidrow17/salesforce-source-package-delta-deploy/issues">View Demo</a>
+    <a href="https://github.com/Skidrow17/salesforce-delta-deploy-source-format/issues">View Demo</a>
     ·
-    <a href="https://github.com/Skidrow17/salesforce-source-package-delta-deploy/issues">Report Bug</a>
+    <a href="https://github.com/Skidrow17/salesforce-delta-deploy-source-format/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Skidrow17/salesforce-source-package-delta-deploy/issues">Request Feature</a>
+    <a href="https://github.com/Skidrow17/salesforce-delta-deploy-source-format/issues">Request Feature</a>
   </p>
 </div>
 
@@ -90,11 +90,9 @@ tools required to be installed
   
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
 1. Clone the repo
    ```sh
-   https://github.com/Skidrow17/salesforce-source-package-delta-deploy.git
+   https://github.com/Skidrow17/salesforce-delta-deploy-source-format.git
    ```
 2. Copy the files inside your salesforce project folder
 3. Add on .gitignore file the DeltaDeploy folder
@@ -106,13 +104,13 @@ _Below is an example of how you can instruct your audience on installing and set
     </target>
     ```
 
-5. Install NPM packages
+5. Install fs-extra library
    ```sh
-   npm install
+   npm install fs-extra
    ```
 6. Run the command (generates package.xml + copies the files inside the deployable folder)
    ```sh 
-    node deltaAntDeploy.js targetBranchNameYouWantToDeploy
+    node delta_deploy.js targetBranchNameYouWantToDeploy
    ```
 7. excecute ant migration tool 
    
@@ -147,6 +145,6 @@ In case you want to contribute to the project and extend its funcationality plea
 
 Silvan Sholla - (https://www.linkedin.com/in/silvan-sholla-1155bb162/)
 
-Project Link: (https://github.com/Skidrow17/salesforce-source-package-delta-deploy)
+Project Link: (https://github.com/Skidrow17/salesforce-delta-deploy-source-format)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
