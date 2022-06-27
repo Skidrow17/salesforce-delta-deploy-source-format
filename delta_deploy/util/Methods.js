@@ -124,6 +124,9 @@ const packageXMLGenerator = (filesCoppied, destinationDirectory, packageVersion)
         '<Package xmlns="http://soap.sforce.com/2006/04/metadata">\n';
 
     Object.keys(filesCoppied).forEach(function (folderName) {
+        
+        if(fse.lstatSync(destinationDirectory.concat(FOLDER_SEPARATOR+folderName)).isFile()){return;}
+     
         packageXML = packageXML + '    <types>'+'\n';
         filesCoppied[folderName].forEach(function (metadataName) {
             if(folderName !== 'labels') {
