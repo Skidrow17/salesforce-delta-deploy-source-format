@@ -106,7 +106,7 @@ tools required to be installed
 
 5. Install fs-extra library
    ```sh
-   npm install fs-extra
+   npm install
    ```
 6. Run the command (generates package.xml + copies the files inside the deployable folder)
    ```sh 
