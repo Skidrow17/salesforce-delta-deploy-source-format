@@ -123,10 +123,10 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
  @param {String} destinationDirectory - contains the directory where the package.xml file will be saved
  @param {String} packageVersion - contains the version of the generated xml
  description : method used to generate package xml whith the differences between two branches
- the current one with the one you specify when you run the command
+ member names not mentioned
  ****************************************************************************************************/
 
-const packageXMLGenerator = (filesCoppied, destinationDirectory, packageVersion) => {
+ const packageXMLGenerator = (filesCoppied, destinationDirectory, packageVersion) => {
 
     let rawData = fse.readFileSync('delta_deploy/util/Metadata.json');
     let metadata = JSON.parse(rawData);
@@ -137,19 +137,9 @@ const packageXMLGenerator = (filesCoppied, destinationDirectory, packageVersion)
         '<Package xmlns="http://soap.sforce.com/2006/04/metadata">\n';
 
     Object.keys(filesCoppied).forEach(function (folderName) {
-        
         if(fse.lstatSync(destinationDirectory.concat(FOLDER_SEPARATOR+folderName)).isFile()){return;}
-     
         packageXML = packageXML + '    <types>'+'\n';
-        filesCoppied[folderName].forEach(function (metadataName) {
-            if(folderName !== 'labels') {
-                let metadataSuffix = '.'+folderObjectMap.get(folderName).suffix;
-                let metaDataFiltered = metadataName.replace('-meta.xml', '').replace(metadataSuffix,'');
-                packageXML = packageXML + '        <members>' + metaDataFiltered + '</members>' + '\n';
-            }else{
-                packageXML = packageXML + '        <members>*</members>' + '\n';
-            }
-        });
+        packageXML = packageXML + '        <members>*</members>' + '\n';
         packageXML = packageXML + '        <name>' + folderObjectMap.get(folderName).xmlName + '</name>'+'\n'
         packageXML = packageXML + '    </types>'+'\n';
     });
