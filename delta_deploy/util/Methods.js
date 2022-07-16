@@ -1,5 +1,5 @@
 
-const {EXCLUDED_FILES, META_XML, FOLDER_SEPARATOR, NOT_REMOTE_BRANCH_SPECIFIED, REMOTE_BRANCH_NOT_CORRECT_FORMAT} = require('../util/Constants');
+const {EXCLUDED_FILES, META_XML, FOLDER_SEPARATOR, NOT_REMOTE_BRANCH_SPECIFIED, REMOTE_BRANCH_NOT_CORRECT_FORMAT, FILE_DELETED_VERIFY_DEST_CHANGED} = require('../util/Constants');
 const fse = require('fs-extra');
 
 
@@ -83,12 +83,23 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
     let folderFilesMap = new Map();
 
     files.forEach(function (file) {
+
         if(file.includes(sourceDirectory) && !EXCLUDED_FILES.has(file)) {
-            fse.copySync(file,file.replace(sourceDirectory, destinationDirectory));
 
             /*
-              in case the metadata file contains extra .meta.xml file copy that also
-              its required for a successfull deploy
+                Also deleted files are considered a change so there is a possiblity the file doesnt excist anymore
+                so a check is needed
+            */
+
+            if(fse.existsSync(file)){
+                fse.copySync(file,file.replace(sourceDirectory, destinationDirectory));
+            } else {
+                console.log(FILE_DELETED_VERIFY_DEST_CHANGED.replace('${file}', file));
+            }
+
+            /*
+                in case the metadata file contains extra .meta.xml file copy that also
+                its required for a successfull deploy
             */
 
             if(fse.existsSync(file.concat(META_XML))){
@@ -98,7 +109,9 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
             let objectFileMap = splitOnce(file.replace(sourceDirectory.concat(FOLDER_SEPARATOR),''),FOLDER_SEPARATOR);
             addValueToKey(objectFileMap[0],objectFileMap[1],folderFilesMap);
         }
+
     });
+
     return folderFilesMap;
 }
 
