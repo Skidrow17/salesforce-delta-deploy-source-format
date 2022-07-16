@@ -28,4 +28,4 @@ fs.mkdirSync(DESTINATION_FOLDER, {recursive: true});
 let filesCoppied = methods.filesCopyFromSourceToDestinationFolder(sourceDestinationBranchesFilesDiff,SOURCE_FOLDER,DESTINATION_FOLDER);
 
 //package xml generator
-methods.packageXMLGenerator(filesCoppied,DESTINATION_FOLDER,STANDARD_PACKAGE_VERSION);
+methods.packageXMLGeneratorNoNamed(filesCoppied,DESTINATION_FOLDER,STANDARD_PACKAGE_VERSION);
