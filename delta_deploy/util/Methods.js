@@ -123,59 +123,10 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
  @param {String} destinationDirectory - contains the directory where the package.xml file will be saved
  @param {String} packageVersion - contains the version of the generated xml
  description : method used to generate package xml whith the differences between two branches
- the current one with the one you specify when you run the command
- ****************************************************************************************************/
-
-const packageXMLGenerator = (filesCoppied, destinationDirectory, packageVersion) => {
-
-    let rawData = fse.readFileSync('delta_deploy/util/Metadata.json');
-    let metadata = JSON.parse(rawData);
-    let folderObjectMap = jsonToMap(metadata);
-
-    let packageXML = '';
-    packageXML = packageXML + '<?xml version="1.0" encoding="UTF-8"?>\n' +
-        '<Package xmlns="http://soap.sforce.com/2006/04/metadata">\n';
-
-    Object.keys(filesCoppied).forEach(function (folderName) {
-        
-        if(fse.lstatSync(destinationDirectory.concat(FOLDER_SEPARATOR+folderName)).isFile()){return;}
-     
-        packageXML = packageXML + '    <types>'+'\n';
-        filesCoppied[folderName].forEach(function (metadataName) {
-            if(folderName !== 'labels') {
-                let metadataSuffix = '.'+folderObjectMap.get(folderName).suffix;
-                let metaDataFiltered = metadataName.replace('-meta.xml', '').replace(metadataSuffix,'');
-                packageXML = packageXML + '        <members>' + metaDataFiltered + '</members>' + '\n';
-            }else{
-                packageXML = packageXML + '        <members>*</members>' + '\n';
-            }
-        });
-        packageXML = packageXML + '        <name>' + folderObjectMap.get(folderName).xmlName + '</name>'+'\n'
-        packageXML = packageXML + '    </types>'+'\n';
-    });
-
-    packageXML = packageXML + '    <version>'+packageVersion+'</version>\n' +
-        '</Package>';
-
-    try {
-        fse.writeFileSync(destinationDirectory+'/package.xml', packageXML);
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-
-/****************************************************************************************************
- author : Silvan Sholla
- date : 25/06/22
- @param {String} filesCoppied - contains a map with folder name as key and list of metadata as value
- @param {String} destinationDirectory - contains the directory where the package.xml file will be saved
- @param {String} packageVersion - contains the version of the generated xml
- description : method used to generate package xml whith the differences between two branches
  member names not mentioned
  ****************************************************************************************************/
 
- const packageXMLGeneratorNoNamed = (filesCoppied, destinationDirectory, packageVersion) => {
+ const packageXMLGenerator = (filesCoppied, destinationDirectory, packageVersion) => {
 
     let rawData = fse.readFileSync('delta_deploy/util/Metadata.json');
     let metadata = JSON.parse(rawData);
@@ -208,5 +159,4 @@ exports.splitOnce = splitOnce;
 exports.jsonToMap = jsonToMap;
 exports.filesCopyFromSourceToDestinationFolder = filesCopyFromSourceToDestinationFolder;
 exports.packageXMLGenerator = packageXMLGenerator;
-exports.packageXMLGeneratorNoNamed = packageXMLGeneratorNoNamed;
 exports.isArgumentValid = isArgumentValid;
