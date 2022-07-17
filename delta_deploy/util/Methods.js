@@ -128,7 +128,7 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
 
  const packageXMLGenerator = (filesCoppied, destinationDirectory, packageVersion) => {
 
-    let rawData = fse.readFileSync('delta_deploy/util/Metadata.json');
+    let rawData = fse.readFileSync(__dirname+'\\Metadata.json');
     let metadata = JSON.parse(rawData);
     let folderObjectMap = jsonToMap(metadata);
 
