@@ -8,13 +8,25 @@
  ****************************************************************************************************/
 
 const fs = require('fs');
+const yargs = require("yargs");
 const { execSync } = require('child_process');
 
 const {SOURCE_FOLDER, GIT_DIFF_NAME_COMMAND, DESTINATION_FOLDER, GIT_FETCH_ALL_COMMAND, STANDARD_PACKAGE_VERSION} = require('./delta_deploy/util/Constants');
 
 const methods = require('./delta_deploy/util/Methods');
 
-let targetBranch = process.argv[2];
+
+const options = yargs
+    .usage("Usage: -d <destinationBranch>")
+    .option("d", { alias: "destination", describe: "destination branch", type: "string", demandOption: true })
+    .option("v", { alias: "packageVersion", describe: "package version", type: "string" })
+    .option("s", { alias: "sourceFolder", describe: "source folder", type: "string" })
+    .argv;
+
+
+let targetBranch = options.destination;
+let packageVersion = (options.packageVersion != null) ? options.packageVersion : STANDARD_PACKAGE_VERSION;
+let sourceFolder = (options.sourceFolder != null) ? options.sourceFolder : SOURCE_FOLDER;
 
 if (methods.isArgumentValid(targetBranch)){return;}
 
@@ -27,7 +39,7 @@ fs.rmSync(DESTINATION_FOLDER, { recursive: true, force: true });
 fs.mkdirSync(DESTINATION_FOLDER, {recursive: true});
 
 //copy files FromSource to Destinatior
-let filesCoppied = methods.filesCopyFromSourceToDestinationFolder(sourceDestinationBranchesFilesDiff,SOURCE_FOLDER,DESTINATION_FOLDER);
+let filesCoppied = methods.filesCopyFromSourceToDestinationFolder(sourceDestinationBranchesFilesDiff,sourceFolder,DESTINATION_FOLDER);
 
 //package xml generator
-methods.packageXMLGenerator(filesCoppied,DESTINATION_FOLDER,STANDARD_PACKAGE_VERSION);
+methods.packageXMLGenerator(filesCoppied,DESTINATION_FOLDER,packageVersion);

@@ -3,7 +3,8 @@
   "version": "2.0.0",
   "main": "./delta_deploy.js",
   "dependencies": {
-    "fs-extra": "^10.1.0"
+    "fs-extra": "^10.1.0",
+    "yargs": "^17.5.1"
   },
   "bin": {
     "SFDX-SDP": "./delta_deploy.js"
