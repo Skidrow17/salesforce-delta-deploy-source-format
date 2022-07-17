@@ -1,6 +1,6 @@
 {
   "name": "salesforce-delta-deploy-source-format",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "main": "./delta_deploy.js",
   "dependencies": {
     "fs-extra": "^10.1.0",
