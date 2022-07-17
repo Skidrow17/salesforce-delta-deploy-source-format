@@ -1,5 +1,5 @@
 {
-  "name": "sf-sdp",
+  "name": "sf-sdd",
   "version": "2.0.1",
   "main": "./delta_deploy.js",
   "dependencies": {
@@ -7,7 +7,7 @@
     "yargs": "^17.5.1"
   },
   "bin": {
-    "sf-sdp": "./delta_deploy.js"
+    "sf-sdd": "./delta_deploy.js"
   },
   "author": "Silvan Sholla (https://www.linkedin.com/in/silvan-sholla-1155bb162/)",
   "license": "MIT"
