@@ -1,6 +1,6 @@
 {
   "name": "sf-sdd",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "main": "./delta_deploy.js",
   "dependencies": {
     "fs-extra": "^10.1.0",
@@ -9,6 +9,11 @@
   "bin": {
     "sf-sdd": "./delta_deploy.js"
   },
+  "keywords": [
+    "salesforce",
+    "release management",
+    "sfdc"
+  ],
   "author": "Silvan Sholla (https://www.linkedin.com/in/silvan-sholla-1155bb162/)",
   "license": "MIT"
 }
