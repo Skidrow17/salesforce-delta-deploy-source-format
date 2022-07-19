@@ -90,7 +90,7 @@ tools required
   
 ### Installation
 
-1. Clone the repo
+1. install module globally
    ```sh
    npm i sf-sdd -g
    ```
