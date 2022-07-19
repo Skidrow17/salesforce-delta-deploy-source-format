@@ -46,7 +46,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-The Source Delta Deploy module is going to make your salesforce deployments a lot faster, as you propably have already realised on the saleseforce project you are working, the repository is getting bigger and bigger and as a result the time of the deployments is increasing dramaticaly. Despite the time required to make a deployment, there is also a problem that its impossible to avoid easlily, the 'too many files in zip'. So what does sf-sdd do, is deploying each time the modified files and not the whole repository. in most cases the deploy can finish in seconds.
+The Source Delta Deploy module is going to make your salesforce deployments a lot faster, as you propably have already noticed on the saleseforce project you are working, the repository is getting bigger and bigger and as a result the time of the deployments is increasing dramaticaly. Despite the time required to make a deployment, there is also a problem that its impossible to avoid easlily, the 'too many files in zip'. So what does sf-sdd do, is deploying each time the modified files and not the whole repository. in most cases the deploy can finish in seconds.
 
 This module is addressed to salesforce project that use classic source format repository.
 
