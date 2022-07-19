@@ -46,9 +46,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-The Source Delta Deploy Project is going to make your salesforce deploys a lot faster, as you propably have already mentioned on the project the saleseforce project you are working, the repository is getting bigger and bigger and as a result the time of the deplys are increasing dramaticaly. Despite the time required to make a deploy, there is also a problem that its impossible to avoid easlily, the 'too many files in zip'. So what does delta deploy do is deploying each time the modified files and not the whole repository. in most cases the deploy can finish in seconds.
+The Source Delta Deploy module is going to make your salesforce deployments a lot faster, as you propably have already realised on the saleseforce project you are working, the repository is getting bigger and bigger and as a result the time of the deplyments is increasing dramaticaly. Despite the time required to make a deployment, there is also a problem that its impossible to avoid easlily, the 'too many files in zip'. So what does delta deploy do, is deploying each time the modified files and not the whole repository. in most cases the deploy can finish in seconds.
 
-The Project is addressed to salesforce project that use the source format and using ant to make their deploys.
+This module is addressed to salesforce project that use classic source format repository.
 
 In case you use SFDX format please refere to https://github.com/scolladon/sfdx-git-delta 
 
@@ -73,7 +73,7 @@ In Order to install these feature on your repository follow the steps below!
 
 ### Prerequisites
 
-tools required to be installed
+tools required
 
 * npm
   ```sh
@@ -92,27 +92,21 @@ tools required to be installed
 
 1. Clone the repo
    ```sh
-   https://github.com/Skidrow17/salesforce-delta-deploy-source-format.git
+   npm i sf-sdd -g
    ```
-2. Copy the files inside your salesforce project folder
-3. Add on .gitignore file the DeltaDeploy folder
-4. Modify the build.xml so that deployroot points to the DeltaDeploy/package folder
+2. Add on .gitignore file the delta_deploy folder
+3. Modify the build.xml so that deployroot points to the delta_deploy/package folder
    ```
     <target name="deployCode">
-      <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" deployroot="DeltaDeploy/package">
+      <sf:deploy username="${sf.username}" password="${sf.password}" serverurl="${sf.serverurl}" deployroot="delta_deploy/package">
       </sf:deploy>
     </target>
     ```
-
-5. Install fs-extra library
-   ```sh
-   npm install
-   ```
-6. Run the command (generates package.xml + copies the files inside the deployable folder)
+4. Run the command (generates package.xml + copies the files inside the deployable folder)
    ```sh 
-    node delta_deploy.js targetBranchNameYouWantToDeploy
+    sf-sdd -d targetbranch
    ```
-7. excecute ant migration tool 
+5. excecute ant migration tool
    
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -121,7 +115,7 @@ tools required to be installed
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-Used to increase the speed of the deploys
+Used to increase the speed of the deployments.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
