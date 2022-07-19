@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   
-  <h3 align="center">Salesforce - Source Delta Deploy</h3>
+  <h3 align="center"> Salesforce - Source Delta Deploy (sf-sdd) </h3>
 
   <p align="center">
     Are you ready to finish your deploys in no time?!
