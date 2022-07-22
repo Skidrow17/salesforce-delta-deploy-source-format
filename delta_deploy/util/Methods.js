@@ -1,5 +1,6 @@
 
 const {EXCLUDED_FILES, META_XML, FOLDER_SEPARATOR, NOT_REMOTE_BRANCH_SPECIFIED, REMOTE_BRANCH_NOT_CORRECT_FORMAT, FILE_DELETED_VERIFY_DEST_CHANGED} = require('../util/Constants');
+const {METADATA_JSON} = require('../util/Metadata');
 const fse = require('fs-extra');
 
 
@@ -128,10 +129,7 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
 
  const packageXMLGenerator = (filesCoppied, destinationDirectory, packageVersion) => {
 
-    let rawData = fse.readFileSync(__dirname+'\\Metadata.json');
-    let metadata = JSON.parse(rawData);
-    let folderObjectMap = jsonToMap(metadata);
-
+    let folderObjectMap = jsonToMap(METADATA_JSON);
     let packageXML = '';
     packageXML = packageXML + '<?xml version="1.0" encoding="UTF-8"?>\n' +
         '<Package xmlns="http://soap.sforce.com/2006/04/metadata">\n';

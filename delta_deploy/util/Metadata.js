@@ -1,4 +1,4 @@
-[
+module.exports.METADATA_JSON = [
 	{
 		"directoryName": "workflows",
 		"suffix": "workflow",
