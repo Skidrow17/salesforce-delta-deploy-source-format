@@ -21,6 +21,7 @@ const options = yargs
     .option("d", { alias: "destination", describe: "destination branch", type: "string", demandOption: true })
     .option("v", { alias: "packageVersion", describe: "package version", type: "string" })
     .option("s", { alias: "sourceFolder", describe: "source folder", type: "string" })
+    .option("n", { alias: "namedPackage", describe: "named package (BETA)", type: "boolean" })
     .argv;
 
 
@@ -39,7 +40,7 @@ fs.rmSync(DESTINATION_FOLDER, { recursive: true, force: true });
 fs.mkdirSync(DESTINATION_FOLDER, {recursive: true});
 
 //copy files FromSource to Destinatior
-let filesCoppied = methods.filesCopyFromSourceToDestinationFolder(sourceDestinationBranchesFilesDiff,sourceFolder,DESTINATION_FOLDER);
+let filesCoppied = methods.filesCopyFromSourceToDestinationFolder(sourceDestinationBranchesFilesDiff, sourceFolder, DESTINATION_FOLDER);
 
 //package xml generator
-methods.packageXMLGenerator(filesCoppied,DESTINATION_FOLDER,packageVersion);
+methods.packageXMLGenerator(filesCoppied, DESTINATION_FOLDER, packageVersion, options.namedPackage);

@@ -1,5 +1,5 @@
 
-const {EXCLUDED_FILES, META_XML, FOLDER_SEPARATOR, NOT_REMOTE_BRANCH_SPECIFIED, REMOTE_BRANCH_NOT_CORRECT_FORMAT, FILE_DELETED_VERIFY_DEST_CHANGED} = require('../util/Constants');
+const {EXCLUDED_FILES, META_XML, FOLDER_SEPARATOR, NOT_REMOTE_BRANCH_SPECIFIED, REMOTE_BRANCH_NOT_CORRECT_FORMAT, FILE_DELETED_VERIFY_DEST_CHANGED, WILDCARD_FOLDERS} = require('../util/Constants');
 const {METADATA_JSON} = require('../util/Metadata');
 const fse = require('fs-extra');
 
@@ -127,7 +127,7 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
  member names not mentioned
  ****************************************************************************************************/
 
- const packageXMLGenerator = (filesCoppied, destinationDirectory, packageVersion) => {
+ const packageXMLGenerator = (filesCoppied, destinationDirectory, packageVersion, namedPackage) => {
 
     let folderObjectMap = jsonToMap(METADATA_JSON);
     let packageXML = '';
@@ -136,8 +136,17 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
 
     Object.keys(filesCoppied).forEach(function (folderName) {
         if(fse.lstatSync(destinationDirectory.concat(FOLDER_SEPARATOR+folderName)).isFile()){return;}
+
         packageXML = packageXML + '    <types>'+'\n';
-        packageXML = packageXML + '        <members>*</members>' + '\n';
+        if(!namedPackage || WILDCARD_FOLDERS.has(folderName)){
+            packageXML = packageXML + '        <members>*</members>' + '\n';
+        }else{
+            filesCoppied[folderName].forEach(function (metadataName) {
+                let metadataSuffix = '.'+folderObjectMap.get(folderName).suffix;
+                let metaDataFiltered = metadataName.replace('-meta.xml', '').replace(metadataSuffix,'');
+                packageXML = packageXML + '        <members>' + metaDataFiltered + '</members>' + '\n';
+            });
+        }
         packageXML = packageXML + '        <name>' + folderObjectMap.get(folderName).xmlName + '</name>'+'\n'
         packageXML = packageXML + '    </types>'+'\n';
     });
