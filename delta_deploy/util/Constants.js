@@ -4,7 +4,7 @@ module.exports.STANDARD_PACKAGE_VERSION = '52.0';
 module.exports.SOURCE_FOLDER = 'src';
 module.exports.DESTINATION_FOLDER = 'delta_deploy/package';
 module.exports.EXCLUDED_FILES = new Set(["src/package.xml"]);
-module.exports.WILDCARD_FOLDERS = new Set(["labels", "customMetadata", "customMetadata", "lwc", "experiences", "aura"]);
+module.exports.WILDCARD_FOLDERS = new Set(["labels", "customMetadata", "lwc", "experiences", "aura"]);
 
 //Git Commands
 module.exports.GIT_DIFF_NAME_COMMAND = 'git diff --name-only {!branchName}';
