@@ -16,7 +16,9 @@ const fse = require('fs-extra');
 
 const addValueToKey = (key, value, folderFileName) => {
     folderFileName[key] ??= [];
-    folderFileName[key].push(value);
+    if(!folderFileName[key].includes(value)){
+        folderFileName[key].push(value);
+    }
 };
 
 /****************************************************************************************************
@@ -108,11 +110,11 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
             }
 
             let objectFileMap = splitOnce(file.replace(sourceDirectory.concat(FOLDER_SEPARATOR),''),FOLDER_SEPARATOR);
-            addValueToKey(objectFileMap[0],objectFileMap[1],folderFilesMap);
+            addValueToKey(objectFileMap[0],splitOnce(objectFileMap[1],'.')[0],folderFilesMap);
         }
 
     });
-
+    
     return folderFilesMap;
 }
 
@@ -142,8 +144,8 @@ const filesCopyFromSourceToDestinationFolder = (files,sourceDirectory,destinatio
             packageXML = packageXML + '        <members>*</members>' + '\n';
         }else{
             filesCoppied[folderName].forEach(function (metadataName) {
-                let metadataSuffix = '.'+folderObjectMap.get(folderName).suffix;
-                let metaDataFiltered = metadataName.replace('-meta.xml', '').replace(metadataSuffix,'');
+                // in case there are wrongly SFDX format files
+                let metaDataFiltered = metadataName.replace('-meta', '');
                 packageXML = packageXML + '        <members>' + metaDataFiltered + '</members>' + '\n';
             });
         }
