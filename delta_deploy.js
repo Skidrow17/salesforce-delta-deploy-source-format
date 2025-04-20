@@ -1,5 +1,12 @@
 #!/usr/bin/env node
 
+/****************************************************************************************************
+ author : Silvan Sholla
+ date : 25/06/22
+ description : Executable to diff CSV folder against a branch and classify changes
+ example : node delta_deploy.js -d main -s ./data
+ ****************************************************************************************************/
+
 const fs = require('fs');
 const path = require('path');
 const yargs = require("yargs");
@@ -30,7 +37,6 @@ if (!fs.existsSync(folder)) {
 });
 
 try {
- // Get the diff for .csv files only
  const diff = execSync(`git diff ${targetBranch} -- ${folder} -- '*.csv'`, { encoding: 'utf8' });
  const lines = diff.split('\n');
 
@@ -39,10 +45,7 @@ try {
 
  for (const line of lines) {
   if (line.startsWith('diff --git')) {
-   // Save any previous file diffs
    if (currentFile) saveFileDelta(currentFile, addedLines, deletedLines);
-
-   // Extract file path
    const match = line.match(/b\/(.+\.csv)$/);
    if (match) {
     currentFile = match[1];
@@ -56,7 +59,6 @@ try {
   }
  }
 
- // Final file
  if (currentFile) saveFileDelta(currentFile, addedLines, deletedLines);
 
 } catch (err) {
@@ -76,22 +78,58 @@ function saveFileDelta(filePath, added, deleted) {
   console.warn(`Could not read header from ${filePath}: ${err.message}`);
  }
 
- if (added.length) {
+ const { added: cleanAdded, deleted: cleanDeleted, updated } = classifyChangesByRow(added, deleted);
+
+ if (cleanAdded.length) {
   fs.writeFileSync(
       path.join(deltaBase, 'added', fileName),
-      [header, ...added].join('\n') + '\n'
+      [header, ...cleanAdded].join('\n') + '\n'
   );
  }
- if (deleted.length) {
+ if (cleanDeleted.length) {
   fs.writeFileSync(
       path.join(deltaBase, 'deleted', fileName),
-      [header, ...deleted].join('\n') + '\n'
+      [header, ...cleanDeleted].join('\n') + '\n'
   );
  }
- if (added.length && deleted.length) {
+ if (updated.length) {
+  const updatedLines = updated.map(pair => pair.new);
   fs.writeFileSync(
       path.join(deltaBase, 'updated', fileName),
-      [header, ...deleted, ...added].join('\n') + '\n'
+      [header, ...updatedLines].join('\n') + '\n'
   );
  }
+}
+
+function classifyChangesByRow(added, deleted) {
+ const updated = [];
+ const trulyAdded = [];
+ const trulyDeleted = [];
+
+ const addedMap = new Map();
+ added.forEach(line => {
+  const key = line.split(',')[0].trim();
+  addedMap.set(key, line);
+ });
+
+ const deletedMap = new Map();
+ deleted.forEach(line => {
+  const key = line.split(',')[0].trim();
+  deletedMap.set(key, line);
+ });
+
+ for (const [key, newLine] of addedMap.entries()) {
+  if (deletedMap.has(key)) {
+   updated.push({ old: deletedMap.get(key), new: newLine });
+   deletedMap.delete(key);
+  } else {
+   trulyAdded.push(newLine);
+  }
+ }
+
+ for (const [_, line] of deletedMap.entries()) {
+  trulyDeleted.push(line);
+ }
+
+ return { added: trulyAdded, deleted: trulyDeleted, updated };
 }
