@@ -67,13 +67,31 @@ function saveFileDelta(filePath, added, deleted) {
  const relPath = path.relative(folder, filePath);
  const fileName = path.basename(relPath);
 
+ let header = '';
+ try {
+  const fullFilePath = path.join(process.cwd(), filePath);
+  const fileContents = fs.readFileSync(fullFilePath, 'utf8');
+  header = fileContents.split('\n')[0];
+ } catch (err) {
+  console.warn(`Could not read header from ${filePath}: ${err.message}`);
+ }
+
  if (added.length) {
-  fs.writeFileSync(path.join(deltaBase, 'added', fileName), added.join('\n') + '\n');
+  fs.writeFileSync(
+      path.join(deltaBase, 'added', fileName),
+      [header, ...added].join('\n') + '\n'
+  );
  }
  if (deleted.length) {
-  fs.writeFileSync(path.join(deltaBase, 'deleted', fileName), deleted.join('\n') + '\n');
+  fs.writeFileSync(
+      path.join(deltaBase, 'deleted', fileName),
+      [header, ...deleted].join('\n') + '\n'
+  );
  }
  if (added.length && deleted.length) {
-  fs.writeFileSync(path.join(deltaBase, 'updated', fileName), [...deleted, ...added].join('\n') + '\n');
+  fs.writeFileSync(
+      path.join(deltaBase, 'updated', fileName),
+      [header, ...deleted, ...added].join('\n') + '\n'
+  );
  }
 }
